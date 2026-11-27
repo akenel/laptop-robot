@@ -31,9 +31,18 @@ two above are tested.
 
 ## Quickstart
 
+The installer does not download the repo: clone it first, into the folder where it will live.
+`~/laptop-robot` is a good place.
+
 ```sh
+sudo apt install git                      # if you don't have it yet
+git clone https://github.com/akenel/laptop-robot.git ~/laptop-robot
+cd ~/laptop-robot
 ./install.sh          # asks before every sudo step; safe to run again
 ```
+
+Keep the folder where you cloned it: the Python environment inside (`.venv`) remembers its
+path. If you move it, delete `.venv` and run `./install.sh` again.
 
 The installer asks which brain: Claude Code, or OpenCode with one of your Ollama models
 (it lists them and writes your pick into `opencode.json`). Then:
