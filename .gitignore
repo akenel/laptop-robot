@@ -1,0 +1,16 @@
+.env
+*.env
+.env.*
+*.env.*
+!.env.example
+
+# media captured during tests
+*.jpg
+*.wav
+
+# python
+.venv/
+__pycache__/
+
+# private notes for the builder, never public
+CLAUDE.local.md

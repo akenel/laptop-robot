@@ -1,0 +1,5 @@
+# Let a normal user drive the Caps Lock LED (the robot's heartbeat).
+# Install:  sudo cp image/90-laptop-robot-capslock.rules /etc/udev/rules.d/
+#           sudo udevadm control --reload && sudo udevadm trigger -s leds
+# Every user on the machine can then switch the LED. Only the LED, nothing else.
+SUBSYSTEM=="leds", KERNEL=="input*::capslock", RUN+="/bin/chmod 0666 /sys%p/brightness"

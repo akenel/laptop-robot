@@ -1,0 +1,22 @@
+name: speaker
+tool: speak
+hardware: default ALSA playback device (built-in speakers), Kokoro text-to-speech (af_bella), local; Piper as light fallback
+reads: []
+writes:
+  - speech: says the text in the voice "Grace" (Kokoro af_bella), streamed sentence by sentence
+# Word limit per speak call, enforced by the server (longer text is refused, not spoken):
+# settings voice.max_words, default 50 for conversation; set 35 for the 60-second film.
+limits:
+  - at most max_words words per call; longer text is refused so you say it shorter
+  - one utterance at a time; a second call waits for the first to finish
+  - cannot be interrupted yet
+intro: My voice is Kokoro, also running right here on the laptop.
+wont: []
+tune: tune_up asks too fast / too slow / just right (Kokoro speed 0.8 to 1.2) and too loud / too quiet (system volume).
+description: >
+  Your voice ("Grace"). Say the text out loud. Keep it short and spoken, no lists or
+  markdown. wait=false (default) returns as soon as speaking starts, so you can call
+  see at the same time, e.g. ask a question while you look. Before outside work (web
+  search, fetching pages, files) announce it with busy=true ("Let me look that up, it
+  may take a moment."): the server then says "Still working on it." if it takes long. The Caps Lock LED blinks
+  fast while you speak.

@@ -1,0 +1,8 @@
+# Direct dependencies, pinned to the versions tested on the reference laptop (25 Nov 2026).
+mcp==2.3.0
+faster-whisper==1.2.1
+kokoro-onnx==0.6.1
+soundfile==0.14.0
+piper-tts==1.8.0
+PyYAML==6.0.4
+pytest==9.2.0

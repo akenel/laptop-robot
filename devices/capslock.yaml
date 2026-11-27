@@ -1,0 +1,22 @@
+name: capslock
+tool: capslock
+hardware: every Caps Lock LED in /sys/class/leds (needs image/90-laptop-robot-capslock.rules)
+reads: []
+writes:
+  - mode: off, on, fast, slow
+signals:  # the standard: no action without a signal
+  "on": your turn, the person talks or shows something (listen)
+  slow: Grace is thinking (between tool calls, transcribing)
+  fast: Grace is acting (watching, speaking, later moving)
+  "off": "idle, after 90 s without a robot tool call (or after the stalled line), or when you set it off at the end"
+limits:
+  - "set by the server itself; your setting lasts until your next tool call"
+intro: And the Caps Lock light is my heartbeat. Solid means your turn, slow means I'm thinking, fast means I'm doing something. It's only the light; your Caps Lock stays off.
+wont: []
+tune: tune_up blinks and asks whether the person sees it; if not, promises that need the LED are dropped.
+description: >
+  Your heartbeat: the Caps Lock LED. Solid on = the person's turn, slow blink = you are
+  thinking, fast blink = you are acting (seeing, speaking, moving). The other tools set
+  it while they really listen, think or act. This tool only switches it off, at the end
+  of a conversation. Never try to show "waiting for you" with it: solid means you are
+  listening. If the person needs time, say so and end your turn.

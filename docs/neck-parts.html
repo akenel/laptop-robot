@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Neck parts</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Neck parts</h1>
+</header>
+<h1 id="neck-block-parts-list">Neck block — parts list</h1>
+<p>Drafted 25 Nov 2026 after a conversation with Grace. <strong>Not
+bought, not tested yet.</strong></p>
+<h2 id="what-to-buy">What to buy</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Part</th>
+<th>Why</th>
+<th>Price seen</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Raspberry Pi Pico 2 <strong>H</strong> (RP2350, pre-soldered
+headers)</td>
+<td>The neck’s small brain. “H” = headers already on, so no
+soldering.</td>
+<td>~CHF 6 (DigiKey CH, ex VAT); EUR 5.95 (Pimoroni)</td>
+<td><a
+href="https://www.digitec.ch/en/s1/product/raspberry-pi-pico-2h-development-boards-kits-58582559">digitec</a>
+· <a
+href="https://shop.pimoroni.com/en-eu/products/raspberry-pi-pico-2">Pimoroni</a></td>
+</tr>
+<tr class="even">
+<td>MG90S micro servo (metal gear, 180°)</td>
+<td>Turns the webcam left/right.</td>
+<td>EUR 5.00, 200+ in stock (Tinytronics)</td>
+<td><a
+href="https://www.tinytronics.nl/en/mechanics-and-actuators/motors/servomotors/mg90s-mini-servo">Tinytronics</a>
+· <a
+href="https://az-delivery.de/en/products/mg90s-micro-servomotor">AZ-Delivery</a></td>
+</tr>
+<tr class="odd">
+<td>Micro-USB <strong>data</strong> cable</td>
+<td>Laptop to Pico: power + commands. Many cheap cables are charge-only
+and will not work.</td>
+<td>a few CHF</td>
+<td>any shop; you may already own one</td>
+</tr>
+<tr class="even">
+<td>Jumper wires, female-to-female (Dupont)</td>
+<td>Servo plug to the Pico header pins.</td>
+<td>a few CHF per pack</td>
+<td>any shop</td>
+</tr>
+</tbody>
+</table>
+<p>Total: roughly <strong>CHF 15–20</strong>.</p>
+<h2 id="wiring-three-wires">Wiring (three wires)</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Servo wire</th>
+<th>Pico pin</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Brown / black (ground)</td>
+<td>GND, pin 38</td>
+</tr>
+<tr class="even">
+<td>Red (power)</td>
+<td>VBUS (5 V from USB), pin 40</td>
+</tr>
+<tr class="odd">
+<td>Orange / yellow (signal)</td>
+<td>GP15, pin 20</td>
+</tr>
+</tbody>
+</table>
+<h2 id="software-two-halves">Software (two halves)</h2>
+<ol type="1">
+<li><strong>On the Pico, once:</strong> flash MicroPython (drag the
+<code>.uf2</code> file onto the Pico), then save a short
+<code>main.py</code> that reads an angle over USB serial and moves the
+servo. It runs by itself on every power-up. Memory is no issue: 4 MB
+flash, 520 KB RAM on the Pico 2.</li>
+<li><strong>On the laptop:</strong> a driver in <code>drivers/</code>
+that sends “turn to 90” over USB serial, plus
+<code>devices/neck.yaml</code>. The MCP server picks it up from the
+registry.</li>
+</ol>
+<h2 id="what-i-could-not-verify-honest-gaps">What I could not verify
+(honest gaps)</h2>
+<ul>
+<li><strong>Prices on digitec.ch:</strong> the pages timed out when
+fetched. The digitec links come from a search and exist, but price and
+stock were not read. Check before ordering.</li>
+<li><strong>Digitec MG90S / jumper wires:</strong> not confirmed that
+they stock them. Tinytronics (NL) and AZ-Delivery (DE) do; postage to
+Switzerland is not checked.</li>
+<li><strong>Power:</strong> an MG90S can draw several hundred mA when it
+stalls; a USB port gives ~500 mA. For a light webcam and slow moves this
+should be fine. If the Pico resets when the servo moves, add a separate
+5 V supply (shared ground). Measure, don’t assume.</li>
+<li><strong>Correction:</strong> during the chat Grace said “the
+original Pico has 2 MB / 264 KB”. True for the Pico 1; the recommended
+Pico 2 has 4 MB / 520 KB.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a
+href="https://www.digitec.ch/en/s1/product/raspberry-pi-pico-2h-development-boards-kits-58582559">digitec
+— Pico 2H</a></li>
+<li><a
+href="https://www.digikey.ch/en/products/detail/dfrobot/DFR1190/26460598">DigiKey
+CH — Pico 2</a></li>
+<li><a
+href="https://shop.pimoroni.com/en-eu/products/raspberry-pi-pico-2">Pimoroni
+— Pico 2</a></li>
+<li><a
+href="https://www.sparkfun.com/raspberry-pi-pico-2-with-headers.html">SparkFun
+— Pico 2 with headers</a></li>
+<li><a
+href="https://www.tinytronics.nl/en/mechanics-and-actuators/motors/servomotors/mg90s-mini-servo">Tinytronics
+— MG90S</a></li>
+<li><a
+href="https://az-delivery.de/en/products/mg90s-micro-servomotor">AZ-Delivery
+— MG90S</a></li>
+</ul>
+</body>
+</html>

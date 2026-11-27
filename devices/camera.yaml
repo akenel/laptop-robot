@@ -1,0 +1,33 @@
+# One plain-language description per device. The MCP server reads this file:
+# `tool` is the tool name, `description` is what the agent is told.
+name: camera
+tool: see
+hardware: USB webcam (found by its /dev/v4l/by-id name, so replugging is fine), 1280x720 MJPEG (PC-LM1E Camera on the reference laptop)
+reads:
+  - photo: one frame, after a 30-frame warm-up
+  - watch: 9 frames over 6 seconds, stitched into one 3x3 grid image
+writes: []
+limits:
+  - photo takes about 1.5 s, watch about 8 s
+  - fixed position; it cannot look around (that is the neck block)
+intro: My eyes are the webcam. I can take a photo, or watch for six seconds to see what you do.
+wont:
+  - text: I don't keep pictures. Each one goes to the model you picked, and nowhere else from here.
+    needs: pictures_not_kept   # false when settings camera.keep_pictures is on
+  - text: Unplug the webcam and I can't see or hear you.
+    needs: unplug_off   # only true when the ears are pinned to the webcam's own mic
+tune: tune_up measures mean brightness and blown-out pixels and steps gamma/brightness (up to 3 rounds), or asks for more or less light.
+description: >
+  Your eyes: the webcam in front of the person. mode="photo" takes one picture.
+  mode="watch" records 6 seconds and returns 9 frames in one grid image, so you can
+  see what the person does with an object (turning it, pointing). Watch runs like a
+  film set: it waits until you have finished speaking your cue, gives the person
+  ready_seconds (default 3, LED solid) to get into position, records (LED fast), then
+  says "Got it." itself. Right after any picture it also says a short "I'm thinking"
+  line ("Let me take a proper look.") while you look, so there is no dead air. So:
+  speak the cue first, then call see; never say "got it" or "let me look" yourself,
+  start straight with what you saw. think_aloud=false skips the thinking line. Describe only what is really visible. If an object could be two things
+  (a lighter or a small flashlight), name both and ask; never pick one and build on it.
+  If the image is too dark to tell, say so and ask the person to turn on a light.
+  In your cue, ask for the object about an arm's length from the camera: closer is blurry.
+  If it is blurry anyway, say so and ask them to hold it further back.

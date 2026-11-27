@@ -1,0 +1,26 @@
+name: mic
+tool: listen
+hardware: default ALSA capture device (built-in DMIC on the reference laptop), 16 kHz mono
+reads:
+  - speech: records until the person stops talking, returns the text (Whisper base.en, local)
+writes: []
+limits:
+  - English only
+  - waits until the voice has finished speaking, so it does not hear itself
+  - stops after 1.5 s of silence, 8 s with no speech, or max_seconds in total
+intro: My ears are a microphone. Whisper turns your words into text, right here on the laptop.
+wont:
+  - text: I only listen while my light is on solid.
+    needs: capslock   # only true where the LED works
+tune: tune_up has the person repeat a sentence and checks how many words were heard.
+description: >
+  Your ears: listen to the person and get back what they said as text, plus why
+  recording stopped (silence, no speech, max length). The Caps Lock LED is solid on
+  while listening: it is the person's turn. If the text is empty, the person said nothing;
+  ask again briefly. Always pass context: a few words the person will likely use, like
+  the object you just saw ("polka-dot mug, cup"). It stops "mug" being heard as "mud".
+  When the person asks a real question, the server already says a short "let me think"
+  line, so start your answer directly. Never call listen at the same time as speak:
+  if speak was refused, listen refuses too until you have spoken.
+  The person's own names and places (settings ears.vocabulary) are added to the context
+  automatically.

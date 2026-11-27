@@ -1,0 +1,33 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "ollama/gemma4:31b-cloud",
+  "permission": {
+    "edit": "ask",
+    "bash": "ask",
+    "webfetch": "ask"
+  },
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (local daemon, cloud models via ollama signin)",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "gemma4:31b-cloud": {
+          "name": "Gemma 4 31B (Ollama Cloud)",
+          "attachment": true,
+          "tool_call": true,
+          "modalities": { "input": ["text", "image"], "output": ["text"] }
+        }
+      }
+    }
+  },
+  "mcp": {
+    "laptop-robot": {
+      "type": "local",
+      "command": [".venv/bin/python", "-m", "mcp_server.server"],
+      "enabled": true
+    }
+  }
+}
